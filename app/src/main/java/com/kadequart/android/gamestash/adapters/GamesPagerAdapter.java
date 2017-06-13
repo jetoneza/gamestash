@@ -2,7 +2,6 @@ package com.kadequart.android.gamestash.adapters;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 
 import com.kadequart.android.gamestash.fragments.PageFragment;
 
