@@ -1,0 +1,24 @@
+*.iml
+.gradle
+/local.properties
+/.idea/workspace.xml
+/.idea/libraries
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+
+# generated files
+bin/
+gen/
+out/
+build/
+.metadata/
+.settings/
+
+# IDEA/Android Studio project files, because
+# the project can be imported from settings.gradle
+.idea
+
+# Local IDEA workspace
+.idea/workspace.xml
