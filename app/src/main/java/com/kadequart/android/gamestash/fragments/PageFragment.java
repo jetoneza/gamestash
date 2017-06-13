@@ -80,6 +80,7 @@ public class PageFragment extends Fragment {
   private void loadGames() {
     ArrayList<Game> games = new ArrayList<>();
 
+    games.add(new Game("Uncharted 4: A Thief's End", "PS4", "Action", 1890.0));
     games.add(new Game("Uncharted: Lost Legacy", "PS4", "Action", 2300.0));
 
     ArrayList<Game> games2 = new ArrayList<>();
@@ -87,7 +88,6 @@ public class PageFragment extends Fragment {
     games2.add(new Game("Uncharted: Drake's Fortune", "PS4", "Action", 1200.0));
     games2.add(new Game("Uncharted 2: Among Thieves", "PS4", "Action", 1090.0));
     games2.add(new Game("Uncharted 3: Drake's Deception", "PS4", "Action", 1100.0));
-    games2.add(new Game("Uncharted 4: A Thief's End", "PS4", "Action", 1890.0));
 
 
     GameAdapter adapter = new GameAdapter(page == PageFragment.WISHLIST_PAGE ? games : games2);
