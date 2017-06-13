@@ -9,7 +9,7 @@ import com.kadequart.android.gamestash.fragments.PageFragment;
  * Created by jeetkunedo on 13/06/2017.
  */
 
-public class GamesPagerAdapter extends FragmentPagerAdapter {
+public class GamesPagerAdapter extends SmartFragmentStatePagerAdapter {
 
   private static int PAGE_COUNT = 2;
 
