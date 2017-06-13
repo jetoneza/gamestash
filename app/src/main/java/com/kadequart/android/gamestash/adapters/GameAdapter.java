@@ -48,6 +48,9 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.ViewHolder> {
 
     TextView titleTextView = (TextView) rowView.findViewById(R.id.text_view_title);
     titleTextView.setText(game.getTitle());
+
+    TextView priceTextView = (TextView) rowView.findViewById(R.id.text_view_price);
+    priceTextView.setText("Php " + game.getPrice());
   }
 
   @Override
