@@ -3,7 +3,10 @@ package com.kadequart.android.gamestash;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.kadequart.android.gamestash.models.Game;
 
@@ -20,6 +23,9 @@ public class ViewGameActivity extends AppCompatActivity {
   private TextView priceTextView;
   private TextView platformTextView;
   private TextView genreTextView;
+  private Button actionButton;
+
+  private Game game;
 
   private int gameId;
 
@@ -36,6 +42,7 @@ public class ViewGameActivity extends AppCompatActivity {
 
     initializeViews();
     loadGame();
+    initializeListeners();
   }
 
   public void initializeViews () {
@@ -43,10 +50,38 @@ public class ViewGameActivity extends AppCompatActivity {
     priceTextView = (TextView) findViewById(R.id.text_view_price);
     platformTextView = (TextView) findViewById(R.id.text_view_platform);
     genreTextView = (TextView) findViewById(R.id.text_view_genre);
+    actionButton = (Button) findViewById(R.id.button_action);
+  }
+
+  public void initializeListeners () {
+    actionButton.setOnClickListener(new View.OnClickListener() {
+
+      @Override
+      public void onClick(View view) {
+        changeGameListType();
+
+        String toastText = "Game";
+
+        toastText += game.getType().equals(Game.WISHLIST) ? " removed from " : " added to ";
+        toastText += "library.";
+
+        Toast.makeText(ViewGameActivity.this, toastText, Toast.LENGTH_SHORT).show();
+
+        onBackPressed();
+      }
+    });
+  }
+
+  public void changeGameListType () {
+    realm.beginTransaction();
+
+    game.changeListType();
+
+    realm.commitTransaction();
   }
 
   public void loadGame () {
-    Game game = realm.where(Game.class).equalTo("id", gameId).findFirst();
+    game = realm.where(Game.class).equalTo("id", gameId).findFirst();
 
     titleTextView.setText(game.getTitle());
     platformTextView.setText(game.getPlatform());
@@ -55,6 +90,10 @@ public class ViewGameActivity extends AppCompatActivity {
     NumberFormat numberFormat = new DecimalFormat("#0.00");
 
     priceTextView.setText("Php " + numberFormat.format(game.getPrice()));
+
+    String buttonText = game.getType().equals(Game.WISHLIST) ? "Add to Library" : "Remove from Library";
+
+    actionButton.setText(buttonText);
   }
 
   @Override

@@ -123,7 +123,7 @@
                 android:background="#dfdfdf"/>
 
             <Button
-                android:id="@+id/button_submit"
+                android:id="@+id/button_action"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="?attr/colorPrimary"

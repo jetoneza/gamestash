@@ -82,6 +82,13 @@ public class Game extends RealmObject {
     return type;
   }
 
+  /**
+   * Utils
+   */
+  public void changeListType () {
+    type = type.equals(WISHLIST) ? LIBRARY : WISHLIST;
+  }
+
   public String toString() {
     String game = "Title: " + title + "\n";
 
