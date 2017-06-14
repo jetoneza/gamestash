@@ -11,13 +11,15 @@ import com.kadequart.android.gamestash.models.Game;
 
 import java.util.ArrayList;
 
+import io.realm.RealmList;
+
 /**
  * Created by jeetkunedo on 13/06/2017.
  */
 
 public class GameAdapter extends RecyclerView.Adapter<GameAdapter.ViewHolder> {
 
-  private ArrayList<Game> data;
+  private RealmList<Game> data;
 
   public static class ViewHolder extends RecyclerView.ViewHolder {
     public View view;
@@ -29,7 +31,7 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.ViewHolder> {
   }
 
 
-  public GameAdapter(ArrayList<Game> data) {
+  public GameAdapter(RealmList<Game> data) {
     this.data = data;
   }
 

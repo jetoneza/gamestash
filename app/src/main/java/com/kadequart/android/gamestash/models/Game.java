@@ -1,10 +1,13 @@
 package com.kadequart.android.gamestash.models;
 
+import io.realm.RealmObject;
+
 /**
  * Created by jeetkunedo on 13/06/2017.
  */
 
-public class Game {
+public class Game extends RealmObject {
+  private int id;
   private String title;
   private String platform;
   private String genre;
@@ -20,6 +23,10 @@ public class Game {
   /**
    * Setters
    */
+  public void setId(int id) {
+    this.id = id;
+  }
+
   public void setTitle (String title) {
     this.title = title;
   }
