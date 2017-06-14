@@ -1,6 +1,7 @@
 package com.kadequart.android.gamestash.fragments;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
@@ -12,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.kadequart.android.gamestash.R;
+import com.kadequart.android.gamestash.ViewGameActivity;
 import com.kadequart.android.gamestash.adapters.GameAdapter;
 import com.kadequart.android.gamestash.models.Game;
 
@@ -102,7 +104,10 @@ public class PageFragment extends Fragment {
 
       Game game = games.get(holder.getAdapterPosition());
 
-      Toast.makeText(getActivity(), game.getTitle() + " selected!", Toast.LENGTH_SHORT).show();
+      Intent intent = new Intent(getActivity(), ViewGameActivity.class);
+      intent.putExtra(Game.MODEL, game.getId());
+
+      startActivity(intent);
     }
   };
 

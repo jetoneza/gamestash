@@ -8,6 +8,7 @@ import io.realm.RealmObject;
 
 public class Game extends RealmObject {
 
+  public static final String MODEL = "GAME";
   public static final String WISHLIST = "wishlist";
   public static final String LIBRARY = "library";
 
@@ -57,6 +58,10 @@ public class Game extends RealmObject {
   /**
    * Getters
    */
+  public int getId () {
+    return id;
+  }
+
   public String getTitle () {
     return title;
   }
