@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.kadequart.android.gamestash.models.Game;
+import com.kadequart.android.gamestash.utils.RealmUtils;
 
 import io.realm.Realm;
 
@@ -67,7 +68,12 @@ public class AddGameActivity extends AppCompatActivity {
 
     realm.beginTransaction();
 
-    Game game = new Game(title, platform, genre, price);
+    Game game = realm.createObject(Game.class);
+    game.setId(RealmUtils.getNextId(realm, Game.class));
+    game.setTitle(title);
+    game.setPlatform(platform);
+    game.setGenre(genre);
+    game.setPrice(price);
 
     realm.commitTransaction();
 
