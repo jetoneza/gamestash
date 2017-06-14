@@ -77,8 +77,6 @@ public class AddGameActivity extends AppCompatActivity {
 
     realm.commitTransaction();
 
-    Log.d("CREATED GAME", game.toString());
-
     Toast.makeText(this, "Game added to wishlist!", Toast.LENGTH_SHORT).show();
 
     onBackPressed();

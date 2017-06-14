@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.kadequart.android.gamestash.R;
 import com.kadequart.android.gamestash.adapters.GameAdapter;
@@ -93,6 +94,29 @@ public class PageFragment extends Fragment {
     }
   }
 
+  private View.OnClickListener onClickListener = new View.OnClickListener() {
+
+    @Override
+    public void onClick(View view) {
+      RecyclerView.ViewHolder holder = recyclerView.getChildViewHolder(view);
+
+      Game game = games.get(holder.getAdapterPosition());
+
+      Toast.makeText(getActivity(), game.getTitle() + " selected!", Toast.LENGTH_SHORT).show();
+    }
+  };
+
+  private RecyclerView.OnChildAttachStateChangeListener attachListener = new RecyclerView.OnChildAttachStateChangeListener() {
+
+    @Override
+    public void onChildViewAttachedToWindow(View view) {
+      view.setOnClickListener(onClickListener);
+    }
+
+    @Override
+    public void onChildViewDetachedFromWindow(View view) {}
+  };
+
   private void setupViews(View view) {
     Activity parentActivity = getActivity();
 
@@ -100,6 +124,7 @@ public class PageFragment extends Fragment {
     recyclerView.setHasFixedSize(true);
     recyclerView.setLayoutManager(new LinearLayoutManager(parentActivity));
     recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL));
+    recyclerView.addOnChildAttachStateChangeListener(attachListener);
   }
 
   private void initializeAdapter() {
