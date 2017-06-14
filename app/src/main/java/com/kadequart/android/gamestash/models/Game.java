@@ -13,6 +13,8 @@ public class Game extends RealmObject {
   private String genre;
   private double price;
 
+  public Game() {}
+
   public Game (String title, String platform, String genre, double price) {
     this.title = title;
     this.platform = platform;

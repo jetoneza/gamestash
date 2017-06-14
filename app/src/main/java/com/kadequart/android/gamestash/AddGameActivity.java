@@ -11,7 +11,11 @@ import android.widget.Toast;
 
 import com.kadequart.android.gamestash.models.Game;
 
+import io.realm.Realm;
+
 public class AddGameActivity extends AppCompatActivity {
+
+  private Realm realm;
 
   private Button submitButton;
   private EditText titleEditText;
@@ -23,6 +27,8 @@ public class AddGameActivity extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_add_game);
+
+    realm = Realm.getDefaultInstance();
 
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     getSupportActionBar().setTitle("Add Game");
@@ -59,9 +65,11 @@ public class AddGameActivity extends AppCompatActivity {
 
     //TODO: add validations
 
+    realm.beginTransaction();
+
     Game game = new Game(title, platform, genre, price);
 
-    // Game Created!
+    realm.commitTransaction();
 
     Log.d("CREATED GAME", game.toString());
 
