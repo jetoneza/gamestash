@@ -54,4 +54,14 @@ public class Game {
   public double getPrice () {
     return price;
   }
+
+  public String toString() {
+    String game = "Title: " + title + "\n";
+
+    game += "Price: " + price + "\n";
+    game += "Platform: " + platform + "\n";
+    game += "Genre: " + genre + "\n";
+
+    return game;
+  }
 }
