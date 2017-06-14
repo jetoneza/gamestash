@@ -7,11 +7,16 @@ import io.realm.RealmObject;
  */
 
 public class Game extends RealmObject {
+
+  public static final String WISHLIST = "wishlist";
+  public static final String LIBRARY = "library";
+
   private int id;
   private String title;
   private String platform;
   private String genre;
   private double price;
+  private String type = WISHLIST;
 
   public Game() {}
 
@@ -45,6 +50,10 @@ public class Game extends RealmObject {
     this.price = price;
   }
 
+  public void setType (String type) {
+    this.type = type;
+  }
+
   /**
    * Getters
    */
@@ -64,12 +73,17 @@ public class Game extends RealmObject {
     return price;
   }
 
+  public String getType () {
+    return type;
+  }
+
   public String toString() {
     String game = "Title: " + title + "\n";
 
     game += "Price: " + price + "\n";
     game += "Platform: " + platform + "\n";
     game += "Genre: " + genre + "\n";
+    game += "Type: " + type + "\n";
 
     return game;
   }
