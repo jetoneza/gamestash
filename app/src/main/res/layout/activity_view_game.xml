@@ -113,7 +113,7 @@
                 android:layout_marginLeft="16dp"
                 android:text="Php 1000.00"
                 android:textAlignment="textStart"
-                android:textColor="@color/colorPrimaryDark"
+                android:textColor="@android:color/holo_orange_dark"
                 android:textSize="18sp"/>
 
             <View
@@ -126,10 +126,10 @@
                 android:id="@+id/button_action"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="?attr/colorPrimary"
-                android:backgroundTint="@color/colorPrimaryDark"
-                android:elevation="4dp"
                 android:layout_margin="16dp"
+                android:background="?android:attr/colorAccent"
+                android:backgroundTint="@android:color/holo_orange_dark"
+                android:elevation="4dp"
                 android:text="Add to Library"
                 android:textColor="@android:color/white"/>
         </LinearLayout>
