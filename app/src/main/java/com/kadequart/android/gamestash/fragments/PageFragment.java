@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +24,8 @@ public class PageFragment extends Fragment {
 
   public static final int WISHLIST_PAGE = 0;
   public static final int LIBRARY_PAGE = 1;
+
+  public static final String[] PAGES = { Game.WISHLIST, Game.LIBRARY };
 
   private Realm realm;
 
@@ -110,10 +111,7 @@ public class PageFragment extends Fragment {
   private void loadGames() {
     games.clear();
 
-    // TODO: add filter based on page
-    games.addAll(realm.where(Game.class).findAllSorted("price", Sort.ASCENDING));
-
-    Log.d("SIZE ===>", games.size() + "");
+    games.addAll(realm.where(Game.class).contains("type", PAGES[page]).findAllSorted("price", Sort.ASCENDING));
 
     adapter.notifyDataSetChanged();
   }
