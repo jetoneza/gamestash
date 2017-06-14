@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +15,9 @@ import com.kadequart.android.gamestash.R;
 import com.kadequart.android.gamestash.adapters.GameAdapter;
 import com.kadequart.android.gamestash.models.Game;
 
-import java.util.ArrayList;
+import io.realm.Realm;
+import io.realm.RealmList;
+import io.realm.Sort;
 
 public class PageFragment extends Fragment {
 
@@ -23,9 +26,14 @@ public class PageFragment extends Fragment {
   public static final int WISHLIST_PAGE = 0;
   public static final int LIBRARY_PAGE = 1;
 
+  private Realm realm;
+
+  private RecyclerView.Adapter adapter;
   private RecyclerView recyclerView;
 
   private int page;
+
+  private RealmList<Game> games = new RealmList<>();
 
   public PageFragment() {
     // Required empty public constructor
@@ -42,7 +50,23 @@ public class PageFragment extends Fragment {
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+
     page = getArguments().getInt(ARG_PAGE);
+
+    realm = Realm.getDefaultInstance();
+  }
+
+  @Override
+  public void onResume() {
+    super.onResume();
+
+    // TODO: Use better implementation
+    // Load games only after creation, deletion, or update success
+    if (adapter == null) {
+      initializeAdapter();
+    }
+
+    loadGames();
   }
 
   @Override
@@ -51,6 +75,7 @@ public class PageFragment extends Fragment {
     View view = inflater.inflate(R.layout.fragment_page, container, false);
 
     setupViews(view);
+    initializeAdapter();
     loadGames();
 
     return view;
@@ -67,7 +92,7 @@ public class PageFragment extends Fragment {
     }
   }
 
-  public void setupViews(View view) {
+  private void setupViews(View view) {
     Activity parentActivity = getActivity();
 
     recyclerView = (RecyclerView) view.findViewById(R.id.games_recycler_view);
@@ -76,7 +101,20 @@ public class PageFragment extends Fragment {
     recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL));
   }
 
-  private void loadGames() {
+  private void initializeAdapter() {
+    adapter = new GameAdapter(games);
 
+    recyclerView.setAdapter(adapter);
+  }
+
+  private void loadGames() {
+    games.clear();
+
+    // TODO: add filter based on page
+    games.addAll(realm.where(Game.class).findAllSorted("price", Sort.ASCENDING));
+
+    Log.d("SIZE ===>", games.size() + "");
+
+    adapter.notifyDataSetChanged();
   }
 }
