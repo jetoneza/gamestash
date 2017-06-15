@@ -51,6 +51,13 @@
             </LinearLayout>
 
 
+            <ImageView
+                android:id="@+id/image_view_photo"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginBottom="16dp"
+                app:srcCompat="@mipmap/ic_games_black_48dp"/>
+
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

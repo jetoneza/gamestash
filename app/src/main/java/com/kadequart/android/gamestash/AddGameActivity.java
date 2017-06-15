@@ -2,22 +2,26 @@ package com.kadequart.android.gamestash;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.kadequart.android.gamestash.models.Game;
 import com.kadequart.android.gamestash.utils.RealmUtils;
+import com.squareup.picasso.Picasso;
 
 import io.realm.Realm;
 
 public class AddGameActivity extends AppCompatActivity {
+
+  private int SELECT_PHOTO = 1;
 
   private Realm realm;
 
@@ -27,6 +31,7 @@ public class AddGameActivity extends AppCompatActivity {
   private EditText platformEditText;
   private EditText genreEditText;
   private LinearLayout photoLinearLayout;
+  private ImageView photoImageView;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +54,10 @@ public class AddGameActivity extends AppCompatActivity {
     platformEditText = (EditText) findViewById(R.id.edit_text_platform);
     genreEditText = (EditText) findViewById(R.id.edit_text_genre);
     photoLinearLayout = (LinearLayout) findViewById(R.id.linear_layout_photo);
+    photoImageView = (ImageView) findViewById(R.id.image_view_photo);
+
+    photoLinearLayout.setVisibility(View.VISIBLE);
+    photoImageView.setVisibility(View.GONE);
   }
 
   public void initializeListeners () {
@@ -59,30 +68,44 @@ public class AddGameActivity extends AppCompatActivity {
         addGame();
       }
     });
-    photoLinearLayout.setOnClickListener(new View.OnClickListener() {
+    photoLinearLayout.setOnClickListener(new PhotoClickListener(this));
+    photoImageView.setOnClickListener(new PhotoClickListener(this));
+  }
 
-      @Override
-      public void onClick(View view) {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
+  public class PhotoClickListener implements View.OnClickListener {
+    Activity parentActivity;
 
-        startActivityForResult(Intent.createChooser(intent, "Select Photo"), 1);
-      }
-    });
+    PhotoClickListener(Activity parentActivity) {
+      this.parentActivity = parentActivity;
+    }
+
+    @Override
+    public void onClick(View view) {
+      Intent intent = new Intent();
+      intent.setType("image/*");
+      intent.setAction(Intent.ACTION_GET_CONTENT);
+
+      startActivityForResult(Intent.createChooser(intent, "Select Photo"), SELECT_PHOTO);
+    }
   }
 
   @Override
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
-    if (resultCode == Activity.RESULT_OK) {
+    if (requestCode == SELECT_PHOTO && resultCode == Activity.RESULT_OK) {
       if (data == null) {
         // TODO: display error
 
         return;
       }
 
-      // TODO: do something with the data
+      photoLinearLayout.setVisibility(View.GONE);
+      photoImageView.setVisibility(View.VISIBLE);
+
+      Uri photo = data.getData();
+      Picasso.with(this).load(photo).fit().into(photoImageView);
+
+      // TODO: Save photo to model
 
       Toast.makeText(this, "Success!", Toast.LENGTH_SHORT).show();
     }
