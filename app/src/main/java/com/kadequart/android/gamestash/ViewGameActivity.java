@@ -1,15 +1,20 @@
 package com.kadequart.android.gamestash;
 
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.kadequart.android.gamestash.models.Game;
+import com.squareup.picasso.Picasso;
 
+import java.io.File;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
@@ -24,6 +29,7 @@ public class ViewGameActivity extends AppCompatActivity {
   private TextView platformTextView;
   private TextView genreTextView;
   private Button actionButton;
+  private ImageView photoImageView;
 
   private Game game;
 
@@ -51,6 +57,7 @@ public class ViewGameActivity extends AppCompatActivity {
     platformTextView = (TextView) findViewById(R.id.text_view_platform);
     genreTextView = (TextView) findViewById(R.id.text_view_genre);
     actionButton = (Button) findViewById(R.id.button_action);
+    photoImageView = (ImageView) findViewById(R.id.image_view_photo);
   }
 
   public void initializeListeners () {
@@ -90,6 +97,13 @@ public class ViewGameActivity extends AppCompatActivity {
     NumberFormat numberFormat = new DecimalFormat("#0.00");
 
     priceTextView.setText("Php " + numberFormat.format(game.getPrice()));
+
+    String photoUriString = game.getPhotoUriString();
+
+    if (photoUriString != null) {
+      // TODO: Fix this. Not working!!!
+      Picasso.with(this).load(photoUriString).resize(200,200).into(photoImageView);
+    }
 
     String buttonText = game.getType().equals(Game.WISHLIST) ? "Add to Library" : "Remove from Library";
 

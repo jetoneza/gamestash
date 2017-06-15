@@ -24,7 +24,7 @@
                 android:minHeight="200dp">
 
                 <ImageView
-                    android:id="@+id/imageView"
+                    android:id="@+id/image_view_photo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
