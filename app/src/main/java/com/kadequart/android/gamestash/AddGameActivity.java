@@ -1,5 +1,7 @@
 package com.kadequart.android.gamestash;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -61,9 +63,29 @@ public class AddGameActivity extends AppCompatActivity {
 
       @Override
       public void onClick(View view) {
-        Toast.makeText(AddGameActivity.this, "Not yet implemented!", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+
+        startActivityForResult(Intent.createChooser(intent, "Select Photo"), 1);
       }
     });
+  }
+
+  @Override
+  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    super.onActivityResult(requestCode, resultCode, data);
+    if (resultCode == Activity.RESULT_OK) {
+      if (data == null) {
+        // TODO: display error
+
+        return;
+      }
+
+      // TODO: do something with the data
+
+      Toast.makeText(this, "Success!", Toast.LENGTH_SHORT).show();
+    }
   }
 
   public void addGame () {
