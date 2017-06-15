@@ -7,6 +7,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.kadequart.android.gamestash.models.Game;
@@ -23,6 +24,7 @@ public class AddGameActivity extends AppCompatActivity {
   private EditText priceEditText;
   private EditText platformEditText;
   private EditText genreEditText;
+  private LinearLayout photoLinearLayout;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +46,7 @@ public class AddGameActivity extends AppCompatActivity {
     priceEditText = (EditText) findViewById(R.id.edit_text_price);
     platformEditText = (EditText) findViewById(R.id.edit_text_platform);
     genreEditText = (EditText) findViewById(R.id.edit_text_genre);
+    photoLinearLayout = (LinearLayout) findViewById(R.id.linear_layout_photo);
   }
 
   public void initializeListeners () {
@@ -52,6 +55,13 @@ public class AddGameActivity extends AppCompatActivity {
       @Override
       public void onClick(View view) {
         addGame();
+      }
+    });
+    photoLinearLayout.setOnClickListener(new View.OnClickListener() {
+
+      @Override
+      public void onClick(View view) {
+        Toast.makeText(AddGameActivity.this, "Not yet implemented!", Toast.LENGTH_SHORT).show();
       }
     });
   }
