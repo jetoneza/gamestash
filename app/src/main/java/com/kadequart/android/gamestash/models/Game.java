@@ -18,6 +18,7 @@ public class Game extends RealmObject {
   private String genre;
   private double price;
   private String type = WISHLIST;
+  private String photoUriString;
 
   public Game() {}
 
@@ -55,6 +56,10 @@ public class Game extends RealmObject {
     this.type = type;
   }
 
+  public void setPhotoUriString(String uri) {
+    this.photoUriString = uri;
+  }
+
   /**
    * Getters
    */
@@ -80,6 +85,10 @@ public class Game extends RealmObject {
 
   public String getType () {
     return type;
+  }
+
+  public String getPhotoUriString () {
+    return photoUriString;
   }
 
   /**

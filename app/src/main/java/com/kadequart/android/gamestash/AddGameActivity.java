@@ -33,6 +33,8 @@ public class AddGameActivity extends AppCompatActivity {
   private LinearLayout photoLinearLayout;
   private ImageView photoImageView;
 
+  private Uri selectedPhoto;
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -102,8 +104,8 @@ public class AddGameActivity extends AppCompatActivity {
       photoLinearLayout.setVisibility(View.GONE);
       photoImageView.setVisibility(View.VISIBLE);
 
-      Uri photo = data.getData();
-      Picasso.with(this).load(photo).fit().into(photoImageView);
+      selectedPhoto = data.getData();
+      Picasso.with(this).load(selectedPhoto).fit().into(photoImageView);
 
       // TODO: Save photo to model
 
@@ -129,6 +131,10 @@ public class AddGameActivity extends AppCompatActivity {
     game.setPlatform(platform);
     game.setGenre(genre);
     game.setPrice(price);
+
+    if (selectedPhoto != null) {
+      game.setPhotoUriString(selectedPhoto.toString());
+    }
 
     realm.commitTransaction();
 
