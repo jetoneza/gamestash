@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.kadequart.android.gamestash.R;
@@ -34,6 +35,7 @@ public class PageFragment extends Fragment {
 
   private RecyclerView.Adapter adapter;
   private RecyclerView recyclerView;
+  private TextView textViewEmpty;
 
   private int page;
 
@@ -130,6 +132,9 @@ public class PageFragment extends Fragment {
     recyclerView.setLayoutManager(new LinearLayoutManager(parentActivity));
     recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL));
     recyclerView.addOnChildAttachStateChangeListener(attachListener);
+
+    textViewEmpty = (TextView) view.findViewById(R.id.text_view_empty);
+    textViewEmpty.setVisibility(View.GONE);
   }
 
   private void initializeAdapter() {
@@ -142,6 +147,12 @@ public class PageFragment extends Fragment {
     games.clear();
 
     games.addAll(realm.where(Game.class).contains("type", PAGES[page]).findAllSorted("price", Sort.ASCENDING));
+
+    if (games.size() == 0) {
+      textViewEmpty.setVisibility(View.VISIBLE);
+    } else {
+      textViewEmpty.setVisibility(View.GONE);
+    }
 
     adapter.notifyDataSetChanged();
   }
