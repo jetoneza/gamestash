@@ -8,13 +8,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.kadequart.android.gamestash.models.Game;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
-import java.io.File;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
@@ -30,6 +31,7 @@ public class ViewGameActivity extends AppCompatActivity {
   private TextView genreTextView;
   private Button actionButton;
   private ImageView photoImageView;
+  private LinearLayout photoLinearLayout;
 
   private Game game;
 
@@ -57,7 +59,11 @@ public class ViewGameActivity extends AppCompatActivity {
     platformTextView = (TextView) findViewById(R.id.text_view_platform);
     genreTextView = (TextView) findViewById(R.id.text_view_genre);
     actionButton = (Button) findViewById(R.id.button_action);
+    photoLinearLayout = (LinearLayout) findViewById(R.id.linear_layout_photo);
     photoImageView = (ImageView) findViewById(R.id.image_view_photo);
+
+    photoLinearLayout.setVisibility(View.VISIBLE);
+    photoImageView.setVisibility(View.GONE);
   }
 
   public void initializeListeners () {
@@ -101,8 +107,10 @@ public class ViewGameActivity extends AppCompatActivity {
     String photoUriString = game.getPhotoUriString();
 
     if (photoUriString != null) {
-      // TODO: Fix this. Not working!!!
-      Picasso.with(this).load(photoUriString).resize(200,200).into(photoImageView);
+      photoLinearLayout.setVisibility(View.GONE);
+      photoImageView.setVisibility(View.VISIBLE);
+
+      Picasso.with(this).load(photoUriString).fit().centerCrop().into(photoImageView);
     }
 
     String buttonText = game.getType().equals(Game.WISHLIST) ? "Add to Library" : "Remove from Library";
