@@ -1,13 +1,17 @@
 package com.kadequart.android.gamestash.adapters;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.kadequart.android.gamestash.R;
 import com.kadequart.android.gamestash.models.Game;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -20,6 +24,7 @@ import io.realm.RealmList;
 public class GameAdapter extends RecyclerView.Adapter<GameAdapter.ViewHolder> {
 
   private RealmList<Game> data;
+  private Context parentContext;
 
   public static class ViewHolder extends RecyclerView.ViewHolder {
     public View view;
@@ -37,7 +42,8 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.ViewHolder> {
 
   @Override
   public GameAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-    View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.games_list_item, parent, false);
+    parentContext = parent.getContext();
+    View view = LayoutInflater.from(parentContext).inflate(R.layout.games_list_item, parent, false);
 
     return new ViewHolder(view);
   }
@@ -53,6 +59,21 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.ViewHolder> {
 
     TextView priceTextView = (TextView) rowView.findViewById(R.id.text_view_price);
     priceTextView.setText("Php " + game.getPrice());
+
+    RelativeLayout photoRelativeLayout = (RelativeLayout) rowView.findViewById(R.id.relative_layout_photo);
+    ImageView photoImageView = (ImageView) rowView.findViewById(R.id.image_view_photo);
+
+    photoRelativeLayout.setVisibility(View.VISIBLE);
+    photoImageView.setVisibility(View.GONE);
+
+    String photoUriString = game.getPhotoUriString();
+
+    if (photoUriString != null) {
+      photoRelativeLayout.setVisibility(View.GONE);
+      photoImageView.setVisibility(View.VISIBLE);
+
+      Picasso.with(parentContext).load(photoUriString).fit().centerCrop().into(photoImageView);
+    }
   }
 
   @Override
