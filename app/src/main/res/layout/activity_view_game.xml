@@ -50,7 +50,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:layout_marginBottom="16dp"
-                app:srcCompat="@mipmap/ic_games_black_48dp"/>
+                app:srcCompat="@mipmap/ic_camera_alt_white_48dp"/>
 
             <TextView
                 android:id="@+id/text_view_title"
