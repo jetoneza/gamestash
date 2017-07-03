@@ -200,13 +200,22 @@ public class AddGameActivity extends AppCompatActivity {
 
       selectedPhoto = data.getData();
       Picasso.with(this).load(selectedPhoto).fit().into(photoImageView);
-
-      Toast.makeText(this, "Success!", Toast.LENGTH_SHORT).show();
     }
   }
 
   public void deleteGame () {
-    Toast.makeText(this, "Not yet implemented.", Toast.LENGTH_SHORT).show();
+    if (game != null) {
+      realm.beginTransaction();
+
+      game.deleteFromRealm();
+
+      realm.commitTransaction();
+
+      Toast.makeText(this, "Delete success!", Toast.LENGTH_SHORT).show();
+
+      Intent intent = new Intent(this, MainActivity.class);
+      startActivity(intent);
+    }
   }
 
   public void addGame () {
