@@ -1,5 +1,6 @@
 package com.kadequart.android.gamestash;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -52,6 +53,15 @@ public class ViewGameActivity extends AppCompatActivity {
     initializeViews();
     loadGame();
     initializeListeners();
+  }
+
+  @Override
+  protected void onResume() {
+    super.onResume();
+
+    // TODO: Use better implementation
+    // Load game only after edit
+    loadGame();
   }
 
   public void initializeViews () {
@@ -139,9 +149,7 @@ public class ViewGameActivity extends AppCompatActivity {
         onBackPressed();
         return true;
       case R.id.action_edit:
-        // TODO: start add game activity
-
-        Toast.makeText(this, "Not yet implemented.", Toast.LENGTH_SHORT).show();
+        startActivity(AddGameActivity.getIntent(this, game.getId()));
 
         return true;
     }

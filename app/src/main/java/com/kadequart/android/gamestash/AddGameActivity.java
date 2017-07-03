@@ -1,6 +1,7 @@
 package com.kadequart.android.gamestash;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
@@ -12,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.kadequart.android.gamestash.models.Game;
@@ -33,8 +35,22 @@ public class AddGameActivity extends AppCompatActivity {
   private EditText genreEditText;
   private LinearLayout photoLinearLayout;
   private ImageView photoImageView;
+  private TextView  headerTextView;
 
   private Uri selectedPhoto;
+
+  private static String INTENT_GAME_ID = "GAME_ID";
+
+  private int gameId;
+
+  private Game game;
+
+  public static Intent getIntent(Context context, int id) {
+    Intent intent = new Intent(context, AddGameActivity.class);
+    intent.putExtra(INTENT_GAME_ID, id);
+
+    return intent;
+  }
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +64,33 @@ public class AddGameActivity extends AppCompatActivity {
 
     initializeViews();
     initializeListeners();
+
+    gameId = getIntent().getIntExtra(INTENT_GAME_ID, 0);
+
+    if (gameId != 0) {
+      initializeGame();
+    }
+  }
+
+  public void initializeGame() {
+    game = realm.where(Game.class).equalTo("id", gameId).findFirst();
+
+    getSupportActionBar().setTitle("Edit Game");
+
+    headerTextView.setVisibility(View.GONE);
+    titleEditText.setText(game.getTitle());
+    priceEditText.setText(game.getPrice() + "");
+    platformEditText.setText(game.getPlatform());
+    genreEditText.setText(game.getGenre());
+
+    String photoUriString = game.getPhotoUriString();
+
+    if (photoUriString != null) {
+      photoLinearLayout.setVisibility(View.GONE);
+      photoImageView.setVisibility(View.VISIBLE);
+
+      Picasso.with(this).load(photoUriString).fit().into(photoImageView);
+    }
   }
 
   public void initializeViews () {
@@ -58,6 +101,7 @@ public class AddGameActivity extends AppCompatActivity {
     genreEditText = (EditText) findViewById(R.id.edit_text_genre);
     photoLinearLayout = (LinearLayout) findViewById(R.id.linear_layout_photo);
     photoImageView = (ImageView) findViewById(R.id.image_view_photo);
+    headerTextView = (TextView) findViewById(R.id.text_view_header);
 
     photoLinearLayout.setVisibility(View.VISIBLE);
     photoImageView.setVisibility(View.GONE);
@@ -115,8 +159,6 @@ public class AddGameActivity extends AppCompatActivity {
       selectedPhoto = data.getData();
       Picasso.with(this).load(selectedPhoto).fit().into(photoImageView);
 
-      // TODO: Save photo to model
-
       Toast.makeText(this, "Success!", Toast.LENGTH_SHORT).show();
     }
   }
@@ -133,8 +175,11 @@ public class AddGameActivity extends AppCompatActivity {
 
     realm.beginTransaction();
 
-    Game game = realm.createObject(Game.class);
-    game.setId(RealmUtils.getNextId(realm, Game.class));
+    if (game == null) {
+      game = realm.createObject(Game.class);
+      game.setId(RealmUtils.getNextId(realm, Game.class));
+    }
+
     game.setTitle(title);
     game.setPlatform(platform);
     game.setGenre(genre);
@@ -146,7 +191,9 @@ public class AddGameActivity extends AppCompatActivity {
 
     realm.commitTransaction();
 
-    Toast.makeText(this, "Game added to wishlist!", Toast.LENGTH_SHORT).show();
+    String message = gameId != 0 ? "Edit success!" : "Game added to wishlist";
+
+    Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
 
     onBackPressed();
   }
