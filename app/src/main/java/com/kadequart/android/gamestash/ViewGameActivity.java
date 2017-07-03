@@ -4,6 +4,7 @@ import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -119,11 +120,30 @@ public class ViewGameActivity extends AppCompatActivity {
   }
 
   @Override
+  public boolean onCreateOptionsMenu(Menu menu) {
+    getMenuInflater().inflate(R.menu.view_game_menu, menu);
+
+    return true;
+  }
+
+  @Override
   public boolean onOptionsItemSelected(MenuItem item) {
     if (item.getItemId() == android.R.id.home) {
       onBackPressed();
 
       return true;
+    }
+
+    switch (item.getItemId()) {
+      case android.R.id.home:
+        onBackPressed();
+        return true;
+      case R.id.action_edit:
+        // TODO: start add game activity
+
+        Toast.makeText(this, "Not yet implemented.", Toast.LENGTH_SHORT).show();
+
+        return true;
     }
 
     return super.onOptionsItemSelected(item);

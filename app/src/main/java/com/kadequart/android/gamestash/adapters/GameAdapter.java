@@ -13,8 +13,6 @@ import com.kadequart.android.gamestash.R;
 import com.kadequart.android.gamestash.models.Game;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
-
 import io.realm.RealmList;
 
 /**
