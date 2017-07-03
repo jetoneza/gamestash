@@ -2,9 +2,11 @@ package com.kadequart.android.gamestash;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -132,11 +134,31 @@ public class AddGameActivity extends AppCompatActivity {
           addGame();
           break;
         case R.id.button_delete:
-          // TODO: implement delete
-          Toast.makeText(parentActivity, "Not yet implemented.", Toast.LENGTH_SHORT).show();
+          displayDeleteConfirmationDialog();
           break;
       }
     }
+  }
+
+  public void displayDeleteConfirmationDialog () {
+    AlertDialog dialog = new AlertDialog.Builder(this)
+        .setTitle("Delete Game")
+        .setMessage("Are you sure you want to delete this game?")
+        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+          @Override
+          public void onClick(DialogInterface dialogInterface, int i) {
+
+          }
+        })
+        .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+          @Override
+          public void onClick(DialogInterface dialogInterface, int i) {
+            deleteGame();
+          }
+        })
+        .create();
+
+    dialog.show();
   }
 
   public class PhotoClickListener implements View.OnClickListener {
@@ -181,6 +203,10 @@ public class AddGameActivity extends AppCompatActivity {
 
       Toast.makeText(this, "Success!", Toast.LENGTH_SHORT).show();
     }
+  }
+
+  public void deleteGame () {
+    Toast.makeText(this, "Not yet implemented.", Toast.LENGTH_SHORT).show();
   }
 
   public void addGame () {
