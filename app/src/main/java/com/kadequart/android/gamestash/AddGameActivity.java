@@ -29,6 +29,7 @@ public class AddGameActivity extends AppCompatActivity {
   private Realm realm;
 
   private Button submitButton;
+  private Button deleteButton;
   private EditText titleEditText;
   private EditText priceEditText;
   private EditText platformEditText;
@@ -78,6 +79,7 @@ public class AddGameActivity extends AppCompatActivity {
     getSupportActionBar().setTitle("Edit Game");
 
     headerTextView.setVisibility(View.GONE);
+    deleteButton.setVisibility(View.VISIBLE);
     titleEditText.setText(game.getTitle());
     priceEditText.setText(game.getPrice() + "");
     platformEditText.setText(game.getPlatform());
@@ -95,6 +97,7 @@ public class AddGameActivity extends AppCompatActivity {
 
   public void initializeViews () {
     submitButton = (Button) findViewById(R.id.button_submit);
+    deleteButton = (Button) findViewById(R.id.button_delete);
     titleEditText = (EditText) findViewById(R.id.edit_text_title);
     priceEditText = (EditText) findViewById(R.id.edit_text_price);
     platformEditText = (EditText) findViewById(R.id.edit_text_platform);
@@ -108,15 +111,32 @@ public class AddGameActivity extends AppCompatActivity {
   }
 
   public void initializeListeners () {
-    submitButton.setOnClickListener(new View.OnClickListener() {
+    submitButton.setOnClickListener(new ClickListener(this));
+    deleteButton.setOnClickListener(new ClickListener(this));
 
-      @Override
-      public void onClick(View view) {
-        addGame();
-      }
-    });
     photoLinearLayout.setOnClickListener(new PhotoClickListener(this));
     photoImageView.setOnClickListener(new PhotoClickListener(this));
+  }
+
+  private class ClickListener implements View.OnClickListener {
+    Activity parentActivity;
+
+    ClickListener(Activity parentActivity) {
+      this.parentActivity = parentActivity;
+    }
+
+    @Override
+    public void onClick(View view) {
+      switch (view.getId()) {
+        case R.id.button_submit:
+          addGame();
+          break;
+        case R.id.button_delete:
+          // TODO: implement delete
+          Toast.makeText(parentActivity, "Not yet implemented.", Toast.LENGTH_SHORT).show();
+          break;
+      }
+    }
   }
 
   public class PhotoClickListener implements View.OnClickListener {

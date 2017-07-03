@@ -134,6 +134,18 @@
                 android:elevation="4dp"
                 android:text="Submit"
                 android:textColor="@android:color/white"/>
+
+            <Button
+                android:id="@+id/button_delete"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/holo_red_light"
+                android:backgroundTint="@android:color/holo_red_light"
+                android:elevation="4dp"
+                android:text="Delete Game"
+                android:layout_marginTop="16dp"
+                android:visibility="gone"
+                android:textColor="@android:color/white"/>
         </LinearLayout>
     </ScrollView>
 
