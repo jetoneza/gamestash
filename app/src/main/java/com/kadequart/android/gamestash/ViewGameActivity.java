@@ -107,9 +107,9 @@ public class ViewGameActivity extends AppCompatActivity {
   public void loadGame () {
     game = realm.where(Game.class).equalTo("id", gameId).findFirst();
 
-    titleTextView.setText(game.getTitle());
-    platformTextView.setText(game.getPlatform());
-    genreTextView.setText(game.getGenre());
+    titleTextView.setText(checkStringValue(game.getTitle()));
+    platformTextView.setText(checkStringValue(game.getPlatform()));
+    genreTextView.setText(checkStringValue(game.getGenre()));
 
     NumberFormat numberFormat = new DecimalFormat("#0.00");
 
@@ -127,6 +127,14 @@ public class ViewGameActivity extends AppCompatActivity {
     String buttonText = game.getType().equals(Game.WISHLIST) ? "Add to Library" : "Remove from Library";
 
     actionButton.setText(buttonText);
+  }
+
+  private String checkStringValue (String value) {
+    if (value == null || value.equals("")) {
+      return "N/A";
+    }
+
+    return value;
   }
 
   @Override
