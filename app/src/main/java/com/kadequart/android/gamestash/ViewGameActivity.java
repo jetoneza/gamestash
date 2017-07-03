@@ -1,10 +1,7 @@
 package com.kadequart.android.gamestash;
 
-import android.content.Intent;
-import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,7 +12,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.kadequart.android.gamestash.models.Game;
-import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import java.text.DecimalFormat;
@@ -111,9 +107,17 @@ public class ViewGameActivity extends AppCompatActivity {
     platformTextView.setText(checkStringValue(game.getPlatform()));
     genreTextView.setText(checkStringValue(game.getGenre()));
 
-    NumberFormat numberFormat = new DecimalFormat("#0.00");
+    String priceString = "FREE";
 
-    priceTextView.setText("Php " + numberFormat.format(game.getPrice()));
+    double price = game.getPrice();
+
+    if (price > 0) {
+      NumberFormat numberFormat = new DecimalFormat("#0.00");
+
+      priceString = "Php " + numberFormat.format(price);
+    }
+
+    priceTextView.setText(priceString);
 
     String photoUriString = game.getPhotoUriString();
 

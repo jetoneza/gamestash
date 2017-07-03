@@ -13,6 +13,9 @@ import com.kadequart.android.gamestash.R;
 import com.kadequart.android.gamestash.models.Game;
 import com.squareup.picasso.Picasso;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+
 import io.realm.RealmList;
 
 /**
@@ -56,7 +59,18 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.ViewHolder> {
     titleTextView.setText(game.getTitle());
 
     TextView priceTextView = (TextView) rowView.findViewById(R.id.text_view_price);
-    priceTextView.setText("Php " + game.getPrice());
+
+    String priceString = "FREE";
+
+    double price = game.getPrice();
+
+    if (price > 0) {
+      NumberFormat numberFormat = new DecimalFormat("#0.00");
+
+      priceString = "Php " + numberFormat.format(price);
+    }
+
+    priceTextView.setText(priceString);
 
     RelativeLayout photoRelativeLayout = (RelativeLayout) rowView.findViewById(R.id.relative_layout_photo);
     ImageView photoImageView = (ImageView) rowView.findViewById(R.id.image_view_photo);
