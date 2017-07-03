@@ -169,7 +169,7 @@ public class AddGameActivity extends AppCompatActivity {
     String platform = platformEditText.getText().toString();
     String genre = genreEditText.getText().toString();
 
-    double price = Double.parseDouble(priceText);
+    double price = priceText.equals("") ? 0 : Double.parseDouble(priceText);
 
     //TODO: add validations
 
